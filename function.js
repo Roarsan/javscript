@@ -1,11 +1,15 @@
+
+// Api Used
 const url = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies.json";
+
+//DOM manipulation
 const dropdowns = document.querySelectorAll(".dropdown select");
 const toCurr = document.querySelector(".to select");
 const fromCurr = document.querySelector(".from select");
 const msg = document.querySelector(".msg");
 const btn = document.querySelector("form button");
 
-async function getList() {
+async function populateList() {
     try {
         const response = await fetch(url);
 
@@ -34,6 +38,7 @@ async function getList() {
     }
 }
 
+//update flag method using flagsapi
 const updateFlag = (element) => {
     let currCode = element.value.slice(0, -1).toUpperCase();
     let newSrc = `https://flagsapi.com/${currCode}/flat/64.png`;
@@ -41,6 +46,8 @@ const updateFlag = (element) => {
     img.src = newSrc;
 };
 
+
+//event listener for currency exchange rat
 btn.addEventListener("click", async (evt) => {
     evt.preventDefault();
     let amount = document.querySelector(".amount input");
@@ -52,7 +59,7 @@ btn.addEventListener("click", async (evt) => {
     let response = await fetch(fromUrl);
     let data = await response.json();
     const rate = data[from]?.[to];
-    
+
     let finalAmount = amountVal * rate;
     msg.innerText = `Converted Amount: ${finalAmount} ${to.toUpperCase()}`;
 
@@ -61,5 +68,5 @@ btn.addEventListener("click", async (evt) => {
 
 
 
-getList();
+populateList();
 
